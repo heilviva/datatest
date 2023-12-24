@@ -1,0 +1,37 @@
+import pandas as pd
+data = pd.read_csv('car_sales.csv')
+print("Размерность датасета:", data.shape)
+print("Наименование колонок и их описание:")
+print("car: модель автомобиля")
+print("year: год выпуска")
+print("price: цена")
+print("color: цвет")
+print("mileage: пробег")
+print("Уникальные значения в колонке 'car':")
+print(data['car'].unique())
+sorted_data = data.sort_values(by='price')
+print("Отсортированный датасет по возрастанию цены:")
+print(sorted_data)
+data = data.drop('mileage', axis=1)
+print("Датасет после удаления столбца 'mileage':")
+print(data)
+if data['year'].isnull().any():
+    mean_year = data['year'].mean()
+    data['year'].fillna(mean_year, inplace=True)
+print("Датасет после замены пустых значений в колонке 'year':")
+print(data)
+data = data.drop_duplicates()
+print("Датасет после удаления дубликатов:")
+print(data)
+
+print("Анализ с помощью функции info:")
+print(data.info())
+
+print("Анализ с помощью функции describe:")
+print(data.describe())
+selected_data = data.loc[2:5, ['car', 'year', 'price']]
+print("Выбранные данные с помощью loc:")
+print(selected_data)
+
+data.to_csv('new_car_sales.csv', index=False)
+print("Новый датасет сохранен.")
